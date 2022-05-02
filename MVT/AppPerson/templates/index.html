@@ -1,0 +1,63 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>
+    <link href="{% static 'AppPerson/css/estilos.css' %}" rel="stylesheet" />
+    <title>MVT- Personas</title>
+</head>
+<body class="mt-5">
+    <div class="main">
+        <div class="column">
+          <h1>MVT- Personas</h1>
+  
+          <div class="container">
+            <h2>Ingrese una Persona</h2>
+  
+            <form action="{% url 'create_person' %}" method="POST" class="form-group mt-5">
+              {% csrf_token %} 
+              <label>Nombre</label>
+              <input type="text" name="name"  required />
+  
+              <label>Apellido</label>
+              <input type="text" name="surname"required />
+  
+              <label>Edad</label>
+              <input type="number" name="age" />
+  
+              <button type="submit">Guardar Persona</button>
+            </form>
+          </div>
+    <div class="container mt-5">
+        <table class='table table-dark table-striped'>
+            <thead>
+                <tr>
+                    <th scope='col' class='ps-4'>ID</th>
+                    <th scope='col' class='text-center'>Nombre</th>
+                    <th scope='col' class='text-center'>Apellido</th>
+                    <th scope='col' class='text-center'>Edad</td>
+                    <th scope='col' class='text-center'>Acciones</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for person in persons%}
+                <tr>
+                    <th scope='row' class='ps-4 align-middle'>{{person.id}}</th>
+                    <td class='text-center align-middle'>{{person.name}}</td>
+                    <td class='text-center align-middle'>{{person.surname}}</td>
+                    <td class='text-center align-middle'>{{person.age}}</td>
+                    <td>
+                       <a href="{% url 'delete_person' person.id%}"" class="btn btn-danger">Eliminar</a>
+                    </td> 
+                </tr>
+                {% endfor%}
+            </tbody>
+    
+        </table>
+        </div>
+</body>
+</html>
